@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 const login = document.getElementById("login");
 const painel = document.getElementById("painel");
 const nomeLogin = document.getElementById("nome-login");
@@ -25,7 +23,7 @@ let filtroAtual = "todas";
 const frasesPapoi = [
     "Estou de olho nas suas tarefas...",
     "Não tente me enganar, eu vi isso.",
-    "Vamos trabalharpara conquistar a Lua!.",
+    "Vamos trabalhar para conquistar a Lua!.",
     "Essa tarefa não vai se fazer sozinha.",
     "Eu estou observando...",
     "Hmm... interessante.",
@@ -53,7 +51,6 @@ function salvarNome(nome) {
 
 function carregarNome() {
     const nomeSalvo = localStorage.getItem("nomeUsuario");
-
     if (nomeSalvo) {
         nomePerfil.textContent = nomeSalvo;
         login.style.display = "none";
@@ -66,13 +63,11 @@ function carregarNome() {
 
 function entrar() {
     const nome = nomeLogin.value.trim();
-
     if (!nome) {
         mostrarErro("Papoi precisa saber quem está entrando!");
         nomeLogin.focus();
         return;
     }
-
     salvarNome(nome);
     nomePerfil.textContent = nome;
     login.style.display = "none";
@@ -82,26 +77,22 @@ function entrar() {
 
 function adicionarTarefa() {
     const texto = entradaTarefa.value.trim();
-
     if (!texto) {
         mostrarErro("Você precisa escrever uma tarefa!");
         entradaTarefa.focus();
         return;
     }
-
     if (texto.length < 2) {
         mostrarErro("Isso nem é uma tarefa, Papoi recusou.");
         entradaTarefa.focus();
         return;
     }
-
     const tarefa = {
         id: Date.now(),
         texto: texto,
         concluida: false,
         data: new Date().toISOString()
     };
-
     tarefas.push(tarefa);
     salvarTarefas();
     entradaTarefa.value = "";
@@ -118,16 +109,9 @@ function formatarData(data) {
 
 function renderizarTarefas() {
     listaTarefas.innerHTML = "";
-
     const tarefasFiltradas = tarefas.filter(tarefa => {
-        if (filtroAtual === "pendentes") {
-            return !tarefa.concluida;
-        }
-
-        if (filtroAtual === "concluidas") {
-            return tarefa.concluida;
-        }
-
+        if (filtroAtual === "pendentes") return !tarefa.concluida;
+        if (filtroAtual === "concluidas") return tarefa.concluida;
         return true;
     });
 
@@ -143,21 +127,16 @@ function renderizarTarefas() {
     tarefasFiltradas.forEach(tarefa => {
         const item = document.createElement("li");
         item.className = "item-tarefa";
-
         if (tarefa.concluida) {
             item.classList.add("item-tarefa-concluida");
         }
-
         const conteudo = document.createElement("div");
         conteudo.className = "tarefa-conteudo";
-
         const texto = document.createElement("span");
         texto.textContent = tarefa.texto;
-
         const data = document.createElement("small");
         data.className = "data-tarefa";
         data.textContent = "Criada em " + formatarData(tarefa.data);
-
         conteudo.appendChild(texto);
         conteudo.appendChild(data);
 
@@ -170,14 +149,12 @@ function renderizarTarefas() {
         botaoConcluir.innerHTML = tarefa.concluida
             ? '<i class="fa-solid fa-rotate-left"></i>'
             : '<i class="fa-solid fa-check"></i>';
-
         botaoConcluir.addEventListener("click", () => alternarTarefa(tarefa.id));
 
         const botaoExcluir = document.createElement("button");
         botaoExcluir.className = "botao-acao excluir";
         botaoExcluir.title = "Excluir tarefa";
         botaoExcluir.innerHTML = '<i class="fa-solid fa-trash"></i>';
-
         botaoExcluir.addEventListener("click", () => excluirTarefa(tarefa.id));
 
         acoes.appendChild(botaoConcluir);
@@ -187,21 +164,15 @@ function renderizarTarefas() {
         item.appendChild(acoes);
         listaTarefas.appendChild(item);
     });
-
     atualizarContador();
 }
 
 function alternarTarefa(id) {
     const tarefa = tarefas.find(t => t.id === id);
-
-    if (!tarefa) {
-        return;
-    }
-
+    if (!tarefa) return;
     tarefa.concluida = !tarefa.concluida;
     salvarTarefas();
     renderizarTarefas();
-
     if (tarefa.concluida) {
         mostrarSucesso();
     } else {
@@ -211,18 +182,12 @@ function alternarTarefa(id) {
 
 function excluirTarefa(id) {
     const tarefa = tarefas.find(t => t.id === id);
-
-    if (!tarefa) {
-        return;
-    }
-
+    if (!tarefa) return;
     const confirmar = confirm("Tem certeza que deseja excluir esta tarefa?");
-
     if (!confirmar) {
         mostrarFrasePapoi("Papoi agradece por você ter reconsiderado.");
         return;
     }
-
     tarefas = tarefas.filter(t => t.id !== id);
     salvarTarefas();
     renderizarTarefas();
@@ -231,7 +196,6 @@ function excluirTarefa(id) {
 
 function atualizarContador() {
     const quantidade = tarefas.length;
-
     if (quantidade === 0) {
         contadorTarefas.textContent = "Nenhuma tarefa";
     } else if (quantidade === 1) {
@@ -242,27 +206,20 @@ function atualizarContador() {
 }
 
 function mostrarSucesso() {
-    if (!papoiPopup) {
-        return;
-    }
-
+    if (!papoiPopup) return;
     const imagem = papoiPopup.querySelector("img");
     const mensagem = papoiPopup.querySelector("#mensagem-sucesso");
-
     if (imagem) {
         imagem.src = "papoicoracao.jpg";
         imagem.style.display = "block";
         imagem.style.opacity = "1";
     }
-
     if (mensagem) {
         mensagem.textContent = frasesSucesso[Math.floor(Math.random() * frasesSucesso.length)];
     }
-
     papoiPopup.style.opacity = "1";
     papoiPopup.style.transform = "translateX(0)";
     papoiPopup.style.pointerEvents = "auto";
-
     setTimeout(() => {
         papoiPopup.style.opacity = "0";
         papoiPopup.style.transform = "translateX(130%)";
@@ -271,25 +228,17 @@ function mostrarSucesso() {
 }
 
 function mostrarFrasePapoi(frase) {
-    if (!papoiFixo) {
-        return;
-    }
-
+    if (!papoiFixo) return;
     const balao = papoiFixo.querySelector(".papoi-balao");
-
     if (balao) {
         balao.textContent = frase;
     }
 }
 
 function mostrarErro(mensagem) {
-    if (!papoiErro) {
-        return;
-    }
-
+    if (!papoiErro) return;
     mensagemErro.textContent = mensagem;
     papoiErro.classList.add("jumpscare-ativo");
-
     if (somErro) {
         somErro.currentTime = 0;
         somErro.play().catch(() => {});
@@ -304,11 +253,8 @@ function fecharErro() {
 
 function alternarTema() {
     document.body.classList.toggle("modo-escuro");
-
     const escuro = document.body.classList.contains("modo-escuro");
-
     localStorage.setItem("temaPapoi", escuro ? "escuro" : "claro");
-
     botaoTema.innerHTML = escuro
         ? '<i class="fa-solid fa-sun"></i>'
         : '<i class="fa-solid fa-moon"></i>';
@@ -316,10 +262,8 @@ function alternarTema() {
 
 function carregarTema() {
     const tema = localStorage.getItem("temaPapoi");
-
     if (tema === "escuro") {
         document.body.classList.add("modo-escuro");
-
         if (botaoTema) {
             botaoTema.innerHTML = '<i class="fa-solid fa-sun"></i>';
         }
@@ -336,7 +280,6 @@ function aplicarFiltro(botao) {
 if (botaoLogin) {
     botaoLogin.addEventListener("click", entrar);
 }
-
 if (nomeLogin) {
     nomeLogin.addEventListener("keydown", event => {
         if (event.key === "Enter") {
@@ -344,11 +287,9 @@ if (nomeLogin) {
         }
     });
 }
-
 if (botaoAdicionar) {
     botaoAdicionar.addEventListener("click", adicionarTarefa);
 }
-
 if (entradaTarefa) {
     entradaTarefa.addEventListener("keydown", event => {
         if (event.key === "Enter") {
@@ -356,19 +297,15 @@ if (entradaTarefa) {
         }
     });
 }
-
 if (botaoTema) {
     botaoTema.addEventListener("click", alternarTema);
 }
-
 filtros.forEach(botao => {
     botao.addEventListener("click", () => aplicarFiltro(botao));
 });
-
 if (botaoDesculpa) {
     botaoDesculpa.addEventListener("click", fecharErro);
 }
-
 document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
         fecharErro();
@@ -389,83 +326,3 @@ setInterval(() => {
 setTimeout(() => {
     mostrarSucesso();
 }, 2000);
-=======
-const campoTarefa = document.getElementById('campo-tarefa');
-const botaoAdicionar = document.querySelector('.caixa-entrada .botao-principal');
-const listaTarefas = document.getElementById('lista-tarefas');
-const contadorTarefas = document.getElementById('contador-tarefas');
-const botaoTema = document.querySelector('.cabecario-aplicacao .botao-principal');
-
-if (botaoTema) {
-    botaoTema.className = 'botao-icone';
-}
-
-function atualizarContador() {
-    const totalTarefas = listaTarefas.children.length;
-    if (totalTarefas === 0) {
-        contadorTarefas.textContent = '0 tarefas na Lista';
-    } else if (totalTarefas === 1) {
-        contadorTarefas.textContent = '1 tarefa na Lista';
-    } else {
-        contadorTarefas.textContent = `${totalTarefas} tarefas na Lista`;
-    }
-}
-
-function adicionarTarefa() {
-    const textoTarefa = campoTarefa.value.trim();
-
-    if (textoTarefa === '') {
-        return;
-    }
-
-    const itemLista = document.createElement('li');
-    itemLista.classList.add('item-tarefa');
-
-    itemLista.innerHTML = `
-        <span>${textoTarefa}</span>
-        <div class="acoes-tarefa">
-            <button class="botao-acao concluir"><i class="fa-solid fa-check"></i></button>
-            <button class="botao-acao excluir"><i class="fa-solid fa-trash"></i></button>
-        </div>
-    `;
-
-    const botaoConcluir = itemLista.querySelector('.concluir');
-    botaoConcluir.addEventListener('click', () => {
-        itemLista.classList.toggle('item-tarefa-concluida');
-    });
-
-    const botaoExcluir = itemLista.querySelector('.excluir');
-    botaoExcluir.addEventListener('click', () => {
-        itemLista.remove();
-        atualizarContador();
-    });
-
-    listaTarefas.appendChild(itemLista);
-
-    campoTarefa.value = '';
-    campoTarefa.focus();
-    atualizarContador();
-}
-
-if (botaoAdicionar) {
-    botaoAdicionar.addEventListener('click', adicionarTarefa);
-}
-
-campoTarefa.addEventListener('keypress', (evento) => {
-    if (evento.key === 'Enter') {
-        adicionarTarefa();
-    }
-});
-
-if (botaoTema) {
-    botaoTema.addEventListener('click', () => {
-        document.body.classList.toggle('modo-escuro');
-        const icone = botaoTema.querySelector('i');
-        if (document.body.classList.contains('modo-escuro')) {
-            icone.className = 'fa-solid fa-sun';
-        } else {
-            icone.className = 'fa-solid fa-moon';
-        }
-    });
-}
->>>>>>> 8d2d83c1fa9e831f744795fb09be7420f8239ed5
