@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Painel de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="login" class="login">
+        <div class="login-cartao">
+            <div class="login-icone"><i class="fa-solid fa-user"></i></div>
+            <p class="subtitulo">BEM-VINDA</p>
+            <h1>Meu Painel</h1>
+            <p>Entre para acessar suas tarefas.</p>
+            <input type="text" id="nome-login" placeholder="Digite seu nome..." maxlength="30">
+            <button id="botao-login" class="botao-principal"><i class="fa-solid fa-right-to-bracket"></i>
+                Entrar</button>
+        </div>
+    </div>
+
+    <div id="painel" class="painel-escondido">
+        <div class="perfil">
+            <img src="eu.jpg" alt="Foto de Paula">
+            <div class="perfil-info"><span id="nome-perfil">Paula</span></div>
+        </div>
+
+        <div class="papoi-fixo" id="papoi-fixo">
+            <div class="papoi-balao"><span id="frase-papoi">Papoi está de olho.</span></div>
+            <img src="papoicheio.jpg" alt="Papoi">
+        </div>
+
+        <div class="papoi-observando" id="papoi-observando">
+            <div class="observando-balao"><span id="frase-observando">Papoi está observando...</span></div>
+            <div class="papoi-observando-placeholder"><img src="papoiaveriguando.jpg" alt="Papoi observando"></div>
+        </div>
+
+        <main class="cartao-aplicacao">
+            <header class="cabecalho-aplicacao">
+                <div>
+                    <p class="subtitulo">PAINEL PESSOAL</p>
+                    <h1>Minhas Tarefas</h1>
+                </div>
+                <button id="botao-tema" class="botao-icone" title="Alterar tema"><i
+                        class="fa-solid fa-moon"></i></button>
+            </header>
+
+            <div class="caixa-entrada">
+                <input type="text" id="entrada-tarefa" placeholder="O que vamos fazer hoje?..." maxlength="40">
+                <button id="botao-adicionar" class="botao-principal"><i class="fa-solid fa-plus"></i> Adicionar</button>
+            </div>
+
+            <div class="filtros-tarefas">
+                <button class="filtro-ativo" data-filtro="todas">Todas</button>
+                <button data-filtro="pendentes">Pendentes</button>
+                <button data-filtro="concluidas">Concluídas</button>
+            </div>
+
+            <ul id="lista-tarefas" class="lista-tarefas"></ul>
+
+            <div class="funcoes-novas">
+                <div class="funcoes-grid">
+                    <div><i class="fa-solid fa-user"></i><span>Login</span></div>
+                    <div><i class="fa-solid fa-floppy-disk"></i><span>Salvar tarefas</span></div>
+                    <div><i class="fa-solid fa-filter"></i><span>Filtrar tarefas</span></div>
+                    <div><i class="fa-solid fa-calendar"></i><span>Data das tarefas</span></div>
+                </div>
+            </div>
+
+            <footer class="rodape-aplicacao">
+                <span id="contador-tarefas">Nenhuma tarefa</span>
+                <span class="status-papoi"><span class="bolinha"></span>Papoi de olho</span>
+            </footer>
+        </main>
+    </div>
+
+    <div id="papoi-sucesso" class="papoi-popup sucesso">
+        <div class="popup-texto">
+            <strong>PAPOI APROVOU!</strong>
+            <span id="mensagem-sucesso">Muito bem!</span>
+        </div>
+        <img src="papoicoracao.jpg" alt="Papoi com coração">
+    </div>
+
+    <div id="papoi-erro">
+        <div class="erro-papoi-imagem"><img src="papoiemo.jpg" alt="Papoi bravo"></div>
+        <div class="popup-texto">
+            <strong>NONONO PAPOI!</strong>
+            <span id="mensagem-erro">Isso não pode!</span>
+        </div>
+        <button id="botao-desculpa" class="botao-desculpa">Desculpe! Vou melhorar</button>
+    </div>
+
+    <audio id="som-erro" src="faaah.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+
+</html>
